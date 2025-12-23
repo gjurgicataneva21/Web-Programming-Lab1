@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Chef Details</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 5px;
+            margin: 5px 0;
+            background-color: #f5f5f5;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+<!-- Dynamically display data -->
+<header>
+    <h1 th:text="${chef.firstName} + ' ' + ${chef.lastName}">Chef Name</h1>
+</header>
+<section>
+    <h2 th:text="${chef.bio}">Chef Bio</h2>
+    <h2>Dishes prepared by this chef:</h2>
+<!--        <ul>-->
+<!--            <li th:each="dish : ${chef.dishes}" style="display: flex; justify-content: space-between; align-items: center; padding:5px; margin:5px 0; background-color:#f5f5f5; border-radius:3px;">-->
+<!--            <span th:text="${dish.name} + ' (' + ${dish.cusine} + ', ' + ${dish.preparationTime} + ' min)'">-->
+<!--                Dish Info-->
+<!--            </span>-->
+
+<!--&lt;!&ndash;                &lt;!&ndash; Delete button &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                <form th:action="@{/deleteDish}" method="POST" style="margin:0;">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input type="hidden" name="chefId" th:value="${chef.id}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input type="hidden" name="dishId" th:value="${dish.dishId}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button type="submit" style="background-color: #dc3545; color:white; border:none; padding:3px 8px; border-radius:3px; cursor:pointer;">&ndash;&gt;-->
+<!--&lt;!&ndash;                        Delete&ndash;&gt;-->
+<!--&lt;!&ndash;                    </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                </form>&ndash;&gt;-->
+<!--            </li>-->
+<!--        </ul>-->
+
+    <ul>
+        <li th:each="dish : ${dishes}" th:text="${dish.name} + ' (' + ${dish.cusine} + ', ' + ${dish.preparationTime} + ' min)'"></li>
+    </ul>
+</section>
+</body>
+</html>

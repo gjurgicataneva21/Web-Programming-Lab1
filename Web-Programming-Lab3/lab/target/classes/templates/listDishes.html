@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Dishes</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2 class="h2">Dishes</h2>
+
+    <th:block th:if="${error != null}">
+        <p th:text="${error}" class="text-danger"></p>
+    </th:block>
+
+    <form method="get" action="/dishes/search" class="form-inline" style="margin-bottom: 20px;">
+        <div class="form-group">
+            <label for="searchBy">Search by:</label>
+            <select id="searchBy" name="searchBy" class="form-control">
+                <option value="name">Dish Name</option>
+                <option value="dishId">Dish ID</option>
+                <option value="cuisine">Cuisine</option>
+                <option value="prepTime">Preparation Time (max)</option>
+                <option value="chefName">Chef Name</option>
+            </select>
+        </div>
+        <div class="form-group" style="margin-left: 10px;">
+            <input type="text" id="searchValue" name="searchValue" class="form-control" placeholder="Enter search term" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Search</button>
+        <a href="/dishes" class="btn btn-default" style="margin-left: 10px;">Clear</a>
+    </form>
+
+
+
+    <form method="post" action="/dishes">
+        <div class="form-group">
+            <label for="chef">Chef</label>
+            <select id="chef" name="chefId" class="form-control">
+                <option value="-1">All chefs</option>
+                <option
+                        th:each="chef : ${chefs}"
+                        th:text="${chef.getFirstName() + ' ' + chef.getLastName()}"
+                        th:value="${chef.getId()}"
+                        th:selected="${chefId != null && chef.id == chefId}">
+                </option>
+            </select>
+            <button type="submit" class="btn btn-secondary">Find dishes by chef</button>
+        </div>
+    </form>
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Dish id</th>
+                <th>Dish name</th>
+                <th>Cuisine</th>
+                <th>Preparation time</th>
+                <th>Chef</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="dish : ${dishes}">
+                <td th:text="${dish.dishId}"></td>
+                <td th:text="${dish.name}"></td>
+                <td th:text="${dish.cusine}"></td>
+                <td th:text="${dish.preparationTime}"></td>
+                <td th:text="${dish.chef.firstName + ' ' + dish.chef.lastName}"></td>
+
+                <td>
+                    <a th:href="@{'/dishes/dish-form/{id}' (id = ${dish.getId()})}" class="btn btn-primary">Edit</a>
+                </td>
+
+                <td class="text-right">
+                    <form th:method="DELETE" th:action="@{'/dishes/delete/{id}' (id = ${dish.getId()})}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <a href="/dishes/dish-form" class="btn btn-block btn-primary">Add new dish</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

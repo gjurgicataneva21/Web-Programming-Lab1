@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dish form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2 th:text="${dish == null ? 'Add new dish' : 'Edit dish'}"></h2>
+    <form th:method="POST" th:action="@{${dish == null ? '/dishes/add' : '/dishes/edit/' + dish.getId()}}" class="form">
+        <div class="form-group">
+            <label for="dishId">Dish id</label>
+            <input id="dishId" name="dishId" type="text" th:value="${dish?.dishId}" placeholder="Dish id" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="name">Dish name</label>
+            <input id="name" name="name" type="text" th:value="${dish?.name}" placeholder="Dish name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="cuisine">Cuisine</label>
+            <input id="cuisine" name="cuisine" type="text" th:value="${dish?.cusine}" placeholder="Cuisine" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="preparationTime">Preparation time</label>
+            <input id="preparationTime" name="preparationTime" type="number" th:value="${dish?.preparationTime}" placeholder="Preparation time" class="form-control">
+        </div>
+
+
+        <div class="form-group">
+            <label for="chef">Chef</label>
+            <select id="chef" name="chefId" class="form-control">
+                <option
+                        th:each="chef : ${chefs}"
+                        th:text="${chef.getFirstName() + ' ' + chef.getLastName()}"
+                        th:value="${chef.getId()}"
+                        th:selected="${dish != null && dish.chef != null && dish.chef == chef}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

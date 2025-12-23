@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>Add Dish to Chef</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, td, th {
+            border: 1px solid black;
+            padding: 10px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+        }
+        section {
+            float: left;
+            margin: 0 1.5%;
+            width: 63%;
+        }
+        aside {
+            float: right;
+            margin: 0 1.5%;
+            width: 30%;
+        }
+        h1{
+            margin: 20px;
+        }
+        tr{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Select the Dish to add to the Chef</h1>
+</header>
+<section>
+    <h2>Select dish:</h2>
+    <form action="/chefDetails" method="POST">
+        <input type="hidden" name="chefId" th:value="${chefId}">
+        <!-- Dynamically display radio buttons for each dish -->
+        <div th:each="dish: ${dishes}">
+            <label class="form-check">
+                <input class="form-check-input" type="radio" name="dishId" th:value="${dish.dishId}" required/>
+                <span th:text="${dish.name} + ', ' + ${dish.cusine} + ' (' + ${dish.preparationTime} + ' min)' "></span>
+            </label>
+        </div>
+        <br/>
+        <input type="submit" value="Add dish" class="btn btn-primary">
+    </form>
+</section>
+<aside>
+    <table>
+        <thead>
+        <tr>
+            <th>Chef ID</th>
+            <th>Chef Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <!-- Display selected chefId -->
+            <td th:text="${chefId}"></td>
+            <!-- Display chef name -->
+            <td th:text="${chef}"></td>
+        </tr>
+        </tbody>
+    </table>
+</aside>
+</body>
+</html>
